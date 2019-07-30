@@ -57,9 +57,15 @@ function parse (text, filePath, DUPLICATE_TOKEN) {
 
     // implemented for now to stop system from erroring out.
     if(line[0] === '#' ) {
+      console.log("Importing:" + line.replace('#base ', ''));
       if ( filePath && line.indexOf("#base") > -1 ) {       
         externals.push( parse( fs.readFileSync(  path.dirname(filePath) + '/' + line.replace('#base ', '') , 'utf8' ) ) );
       }
+      console.log("Import complete.");
+      continue
+    }
+
+     if (line.indexOf('"REMOVE"') > -1) {
       continue
     }
 
