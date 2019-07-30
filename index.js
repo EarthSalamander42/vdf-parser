@@ -3,12 +3,17 @@
 //
 // author: Rossen Popov, 2014-2016
 // contributor: Tom Shaver, 2017
+// updated by: Yug Kapoor, 2019
+
+const fs = require('fs');
+const path = require('path');
+
 
 
 // duplicate token can be undefined. If it is, checks are skipped later on.
 // it is expected for DUPLICATE_TOKEN to be a string identifier appended to
 // duplicate keys
-function parse (text, DUPLICATE_TOKEN) {
+function parse (text, filePath, DUPLICATE_TOKEN) {
   if (typeof text !== 'string') {
     throw new TypeError('VDF.parse: Expecting text parameter to be a string')
   }
@@ -26,6 +31,7 @@ function parse (text, DUPLICATE_TOKEN) {
   var expectBracket = false
   var line = ''
   var m = ''
+  var externals = [];
 
   var reKV = new RegExp(
     '^("((?:\\\\.|[^\\\\"])+)"|([a-z0-9\\-\\_]+))' +
@@ -51,6 +57,9 @@ function parse (text, DUPLICATE_TOKEN) {
 
     // implemented for now to stop system from erroring out.
     if(line[0] === '#' ) {
+      if ( filePath && line.indexOf("#base") > -1 ) {       
+        externals.push( parse( fs.readFileSync(  path.dirname(filePath) + '/' + line.replace('#base ', '') , 'utf8' ) ) );
+      }
       continue
     }
 
@@ -138,6 +147,14 @@ function parse (text, DUPLICATE_TOKEN) {
 
   if (stack.length !== 1) {
     throw new SyntaxError('VDF.parse: open parentheses somewhere')
+  }
+
+  for (  key in obj ) {
+    for ( external of externals ) {
+      if (  external.hasOwnProperty(key) ) {
+        obj[key] = {...external[key], ...obj[key]};
+      }
+    }
   }
 
   return obj
