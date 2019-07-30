@@ -8,6 +8,15 @@
 const fs = require('fs');
 const path = require('path');
 
+function cleanString(input) {
+    var output = "";
+    for (var i=0; i<input.length; i++) {
+        if (input.charCodeAt(i) <= 127 && input.charCodeAt(i) > 0) {
+            output += input.charAt(i);
+        }
+    }
+    return output;
+}
 
 
 // duplicate token can be undefined. If it is, checks are skipped later on.
@@ -45,7 +54,7 @@ function parse (text, filePath, DUPLICATE_TOKEN) {
   var j = lines.length
 
   for (; i < j; i++) {
-    line = lines[i].trim()
+    line = cleanString(lines[i]).trim()
 
     // skip empty and comment lines
     if (line === '' || line[0] === '/') {
@@ -76,7 +85,9 @@ function parse (text, filePath, DUPLICATE_TOKEN) {
     }
 
     if (expectBracket) {
-      throw new SyntaxError('VDF.parse: expected bracket on line ' + (i + 1))
+      console.log(line);
+      console.log(line.charCodeAt(0));
+      throw new SyntaxError('VDF.parse: expected bracket on line ' + (i + 1) + "line:" + line)
     }
 
     // one level back
