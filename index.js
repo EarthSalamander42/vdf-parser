@@ -51,6 +51,7 @@ async function parse (text, filePath, DUPLICATE_TOKEN) {
   var obj = {}
   var stack = [obj]
   var expectBracket = false
+  var samelineBracket = false
   var line = ''
   var m = ''
   var externals = [];
@@ -99,6 +100,7 @@ async function parse (text, filePath, DUPLICATE_TOKEN) {
 
     if (line.includes('{')) {
       line = line.replace('{', '')
+      samelineBracket = true
     }
 
     if (expectBracket) {
@@ -166,8 +168,9 @@ async function parse (text, filePath, DUPLICATE_TOKEN) {
         stack.push(stack[stack.length - 1][ key ])
         expectBracket = true
 
-        if (line.includes('{')) {
+        if (samelineBracket) {
           expectBracket = false
+          samelineBracket = false
         }
       } else {
         if (!m[ 7 ] && !m[ 8 ]) {
