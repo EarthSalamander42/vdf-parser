@@ -5,8 +5,21 @@
 // contributor: Tom Shaver, 2017
 // updated by: Yug Kapoor, 2019
 
-const fs = require('fs');
+const request = require('request');
 const path = require('path');
+
+function getFile(file) {
+  return new Promise((resolve, reject) => {
+
+    console.log("Downloading: "  + file);
+    request(file, (err, res, body) => {
+          if (err) console.log(err), cli.error("Unable to download: " + file);
+          console.log("Download complete.");
+          resolve( body );
+    });
+
+  }); 
+};
 
 function cleanString(input) {
     var output = "";
@@ -22,7 +35,7 @@ function cleanString(input) {
 // duplicate token can be undefined. If it is, checks are skipped later on.
 // it is expected for DUPLICATE_TOKEN to be a string identifier appended to
 // duplicate keys
-function parse (text, filePath, DUPLICATE_TOKEN) {
+async function parse (text, filePath, DUPLICATE_TOKEN) {
   if (typeof text !== 'string') {
     throw new TypeError('VDF.parse: Expecting text parameter to be a string')
   }
@@ -68,7 +81,7 @@ function parse (text, filePath, DUPLICATE_TOKEN) {
     if(line[0] === '#' ) {
       console.log("Importing:" + line.replace('#base ', ''));
       if ( filePath && line.indexOf("#base") > -1 ) {       
-        externals.push( parse( fs.readFileSync(  path.dirname(filePath) + '/' + line.replace('#base ', '') , 'utf8' ) ) );
+        externals.push( await parse( await getFile(  path.dirname(filePath) + '/' + line.replace('#base ', '') ) ) );
       }
       console.log("Import complete.");
       continue
