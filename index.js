@@ -97,9 +97,11 @@ async function parse (text, filePath, DUPLICATE_TOKEN) {
       continue
     }
 
+    if (line.includes('{')) {
+      expectBracket = false      
+    }
+
     if (expectBracket) {
-      console.log(line);
-      console.log(line.charCodeAt(0));
       throw new SyntaxError('VDF.parse: expected bracket on line ' + (i + 1) + "line:" + line)
     }
 
@@ -108,6 +110,7 @@ async function parse (text, filePath, DUPLICATE_TOKEN) {
       stack.pop()
       continue
     }
+
 
     let done = false
 
