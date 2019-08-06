@@ -98,7 +98,6 @@ async function parse (text, filePath, DUPLICATE_TOKEN) {
     }
 
     if (line.includes('{')) {
-      expectBracket = false
       line = line.replace('{', '')
     }
 
@@ -166,6 +165,10 @@ async function parse (text, filePath, DUPLICATE_TOKEN) {
 
         stack.push(stack[stack.length - 1][ key ])
         expectBracket = true
+
+        if (line.includes('{')) {
+          expectBracket = false
+        }
       } else {
         if (!m[ 7 ] && !m[ 8 ]) {
           line += '\n' + lines[ ++i ]
