@@ -98,7 +98,8 @@ async function parse (text, filePath, DUPLICATE_TOKEN) {
     }
 
     if (line.includes('{')) {
-      expectBracket = false      
+      expectBracket = false
+      line = line.replace('{', '')
     }
 
     if (expectBracket) {
