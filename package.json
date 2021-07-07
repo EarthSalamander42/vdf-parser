@@ -1,5 +1,37 @@
 {
-  "author": "Rossen Georgiev <hello@rgp.io>",
+  "_args": [
+    [
+      "git+https://github.com/skords/vdf-parser.git",
+      "C:\\Users\\jeizy\\Documents\\GitHub\\imba_website_wiki"
+    ]
+  ],
+  "_from": "git+https://github.com/skords/vdf-parser.git",
+  "_id": "simple-vdf-mstan@git+https://github.com/skords/vdf-parser.git#5b3dfea72779253ccf47bb16ad8f805ccab7ab09",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/simple-vdf-mstan",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "git+https://github.com/skords/vdf-parser.git",
+    "rawSpec": "git+https://github.com/skords/vdf-parser.git",
+    "saveSpec": "git+https://github.com/skords/vdf-parser.git",
+    "fetchSpec": "https://github.com/skords/vdf-parser.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+https://github.com/skords/vdf-parser.git#5b3dfea72779253ccf47bb16ad8f805ccab7ab09",
+  "_spec": "git+https://github.com/skords/vdf-parser.git",
+  "_where": "C:\\Users\\jeizy\\Documents\\GitHub\\imba_website_wiki",
+  "author": {
+    "name": "Rossen Georgiev",
+    "email": "hello@rgp.io"
+  },
+  "bugs": {
+    "url": "https://github.com/mstan/vdf-parser/issues"
+  },
   "contributors": [
     {
       "name": "Tom Shaver",
@@ -12,32 +44,8 @@
       "url": "https://github.com/mstan"
     }
   ],
-  "name": "simple-vdf-mstan",
-  "description": "Package for (de)serialization of Valve's KeyValue format (VDF)",
-  "version": "1.3.1",
-  "license": "MIT",
-  "homepage": "https://github.com/mstan/vdf-parser",
-  "readmeFilename": "README.md",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/mstan/vdf-parser.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mstan/vdf-parser/issues"
-  },
-  "scripts": {
-    "lint": "yarn standard",
-    "test": "mocha",
-    "nyc": "nyc mocha",
-    "htmlcov": "nyc report --reporter=html",
-    "textcov": "nyc report --reporter=text-lcov > coverage.lcov",
-    "coverage": "yarn htmlcov && yarn textcov",
-    "tandc": "yarn nyc && yarn coverage",
-    "codecov": "codecov",
-    "codacy": "cat coverage.lcov | codacy-coverage"
-  },
   "dependencies": {},
+  "description": "Package for (de)serialization of Valve's KeyValue format (VDF)",
   "devDependencies": {
     "chai": "^4.1.2",
     "cli": "^1.0.1",
@@ -47,11 +55,31 @@
     "nyc": "^11.4.1",
     "standard": "^11.0.0"
   },
-  "optionalDependencies": {},
+  "homepage": "https://github.com/mstan/vdf-parser",
   "keywords": [
     "vdf",
     "keyvalue",
     "steam",
     "valve"
-  ]
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "simple-vdf-mstan",
+  "optionalDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mstan/vdf-parser.git"
+  },
+  "scripts": {
+    "codacy": "cat coverage.lcov | codacy-coverage",
+    "codecov": "codecov",
+    "coverage": "yarn htmlcov && yarn textcov",
+    "htmlcov": "nyc report --reporter=html",
+    "lint": "yarn standard",
+    "nyc": "nyc mocha",
+    "tandc": "yarn nyc && yarn coverage",
+    "test": "mocha",
+    "textcov": "nyc report --reporter=text-lcov > coverage.lcov"
+  },
+  "version": "1.3.1"
 }
